@@ -1,3 +1,3 @@
-Example 11-9: Managing Many Objects
+# Vizer
 
-Getting Started with p5.js: Page 175
+A P5JS framework for running a simple music visualizer, intended as a creative coding I assignment.
