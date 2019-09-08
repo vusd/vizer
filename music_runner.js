@@ -12,8 +12,6 @@ let songIsPlaying = false;
 let songEpoch = 0;              // millis when song starts
 let table;
 
-SMOOTHING;
-
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
   print(songButton.elt.innerHTML);
@@ -46,8 +44,9 @@ function setup() {
   frameRate(60);
 
   //table to integers
-  let smoothing = SMOOTHING !== undefined ? SMOOTHING : 0.1
-  const updateFactor = max(0.001, min(1, 1-smoothing))
+  let smoothing = window.SMOOTHING !== undefined ? window.SMOOTHING : 0.1
+  const updateFactor = max(0.05, min(1, 1-smoothing))
+  console.log("upd8 factor is " + updateFactor)
   let smoothedRow = []
 
   table.rows.forEach((row, rowI) => {
