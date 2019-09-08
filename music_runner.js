@@ -9,7 +9,7 @@ let editorMode = true;          // false when in song mode
 let songLoadStatus = "loading"; // "error", "loaded"
 let song;
 let songIsPlaying = false;
-let songEpoch = 0; // millis when song starts
+let songEpoch = 0;              // millis when song starts
 let table;
 
 function songLoadedError() {
@@ -44,10 +44,10 @@ function setup() {
   frameRate(60);
 
   // create sliders
-  slider1 = createSlider(0, 100, 0);
-  slider2 = createSlider(0, 100, 0);
-  slider3 = createSlider(0, 100, 0);
-  slider4 = createSlider(0, 100, 0);
+  slider1 = createSlider(0, 100, 50);
+  slider2 = createSlider(0, 100, 50);
+  slider3 = createSlider(0, 100, 50);
+  slider4 = createSlider(0, 100, 50);
 
   slider1.parent('slider1Container');
   slider2.parent('slider2Container');
@@ -147,7 +147,7 @@ function draw() {
         slider2.value(row[2]);
         slider3.value(row[3]);
         slider4.value(row[4]);
-        draw_one_frame(row[1], row[2], row[3], row[4]);
+        draw_one_frame(row[1], row[2], row[3], row[4], curSlice);
       }
     }
   }
