@@ -1,20 +1,25 @@
 
 function draw_one_frame(vocal, drum, bass, other) {
-  let volume_vocal = map(vocal, 0, 100, 0, height, true);
-  let volume_drum  = map(drum, 0, 100, 0, height, true);
-  let volume_bass  = map(bass, 0, 100, 0, height, true);
-  let volume_other = map(other, 0, 100, 0, height, true);
-
-
   background(20);
   rectMode(CENTER);
 
+  let bar_spacing = width/5;
+  let bar_height = height/2;
+  let bar_width = width/6;
+
+  // vocal bar is red
   fill(200, 0, 0);
-  rect(2*width/10, height/2, width/6, volume_vocal);
+  rect(1 * bar_spacing, bar_height, bar_width, vocal);
+
+  // drum bar is green
   fill(0, 200, 0);
-  rect(4*width/10, height/2, width/6, volume_drum);
-  fill(200, 200, 200);
-  rect(6*width/10, height/2, width/6, volume_bass);
+  rect(2 * bar_spacing, bar_height, bar_width, drum);
+
+  // bass bar is blue
   fill(0, 0, 200);
-  rect(8*width/10, height/2, width/6, volume_other);
+  rect(3 * bar_spacing, bar_height, bar_width, bass);
+
+  // other bar is white
+  fill(200, 200, 200);
+  rect(4 * bar_spacing, bar_height, bar_width, other);
 }
