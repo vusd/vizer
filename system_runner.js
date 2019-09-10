@@ -218,10 +218,4 @@ function keyTyped() {
   if (key == '0') {
     song.setVolume(1.0);
   }
-  if (key == '!') {
-    saveBlocksImages();
-  }
-  else if (key == '@') {
-    saveBlocksImages(true);
-  }
 }
