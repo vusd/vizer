@@ -102,14 +102,14 @@ function draw() {
     let s3 = slider3.value();
     let s4 = slider4.value();
 
-    draw_one_frame(s1, s2, s3, s4);
+    draw_one_frame(s1, s2, s3, s4, 0);
   }
   else {
     if(songEpoch > 0) {
-      background(30);
       let now = millis();
       let songOffset = now - songEpoch;
       if(songOffset < 0) {
+        background(30);
         let secondsRemaining = songOffset / -1000.0;
         let intSecs = int(secondsRemaining);
         if(intSecs > 0) {
@@ -132,6 +132,9 @@ function draw() {
         song.play();
         songIsPlaying = true;
         songEpoch = millis();
+        if (typeof reset_music === "function") {
+          reset_music();
+        }
       }
     }
     if(songIsPlaying) {

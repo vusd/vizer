@@ -1,4 +1,3 @@
-
 function draw_one_frame(vocal, drum, bass, other) {
   background(20);
   rectMode(CENTER);
