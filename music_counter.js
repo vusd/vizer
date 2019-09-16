@@ -1,4 +1,3 @@
-// SMOOTHING = 0.3
 
 function draw_one_frame(vocal, drum, bass, other, counter) {
   let volume_vocal = map(vocal, 0, 100, 0, height, true);
