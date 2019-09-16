@@ -37,6 +37,9 @@ function preload() {
   table = loadTable('volumes.csv', 'csv');
 }
 
+let volumes = [];
+let volume_length = 0;
+
 function setup() {
   main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
@@ -75,6 +78,33 @@ function setup() {
   songButton.mousePressed(switchRunMode);
   songButton.parent('button1Container');
   songButton.elt.disabled = true;
+
+  vol1 = [];
+  vol2 = [];
+  vol3 = [];
+  vol4 = [];
+  volumes = [vol1, vol2, vol3, vol4];
+  volume_table_length = table.getRowCount();
+  for(let i=0; i< volume_table_length;i++) {
+    let row = table["rows"][i].arr;
+    vol1.push(float(row[1]));
+    vol2.push(float(row[2]));
+    vol3.push(float(row[3]));
+    vol4.push(float(row[4]));
+  }
+  /*
+  for(let i=0; i<4; i++) {
+    let radius = map(i, 0, 3, 0, 3);
+    volumes[i] = Taira.smoothen(vol1, Taira.ALGORITHMS.GAUSSIAN, 10, radius, true)
+  }
+  volumes[0] = vol1;
+  */
+  if(smoothing != 0) {
+    let radius = map(smoothing, 0, 100, 0, 3);
+    for(let i=0; i<4; i++) {
+      volumes[i] = Taira.smoothen(volumes[i], Taira.ALGORITHMS.GAUSSIAN, 10, radius, true)
+    }
+  }
 }
 
 function switchRunMode() {
@@ -119,14 +149,14 @@ function draw() {
     let s3 = slider3.value();
     let s4 = slider4.value();
 
-    draw_one_frame(s1, s2, s3, s4);
+    draw_one_frame(s1, s2, s3, s4, 0);
   }
   else {
     if(songEpoch > 0) {
-      background(30);
       let now = millis();
       let songOffset = now - songEpoch;
       if(songOffset < 0) {
+        background(30);
         let secondsRemaining = songOffset / -1000.0;
         let intSecs = int(secondsRemaining);
         if(intSecs > 0) {
@@ -149,22 +179,26 @@ function draw() {
         song.play();
         songIsPlaying = true;
         songEpoch = millis();
+        if (typeof reset_music === "function") {
+          reset_music();
+        }
       }
     }
     if(songIsPlaying) {
       let curMillis = millis();
       let timeOffset = curMillis - songEpoch;
       let curSlice = int(60 * timeOffset / 1000.0);
-      if (curSlice < table.getRowCount()) {
+      if (curSlice < volume_table_length) {
         // print("Processing " + curSlice + " of " + table.getRowCount())
-        let row = table["rows"][curSlice].arr
+        // let row = table["rows"][curSlice].arr
         // draw_one_frame(row);
         // print(row);
-        slider1.value(row[1]);
-        slider2.value(row[2]);
-        slider3.value(row[3]);
-        slider4.value(row[4]);
-        draw_one_frame(row[1], row[2], row[3], row[4], curSlice);
+        let row = [volumes[0][curSlice], volumes[1][curSlice], volumes[2][curSlice], volumes[3][curSlice]]
+        slider1.value(row[0]);
+        slider2.value(row[1]);
+        slider3.value(row[2]);
+        slider4.value(row[3]);
+        draw_one_frame(row[0], row[1], row[2], row[3], curSlice);
       }
     }
   }
@@ -200,11 +234,5 @@ function keyTyped() {
   }
   if (key == '0') {
     song.setVolume(1.0);
-  }
-  if (key == '!') {
-    saveBlocksImages();
-  }
-  else if (key == '@') {
-    saveBlocksImages(true);
   }
 }
