@@ -25,6 +25,9 @@ function songLoaded() {
   songButton.elt.disabled = false;
   // let now = millis();
   // songEpoch = now + 5000;
+  if(debugFastRefresh){
+    switchRunMode()
+  }
 }
 
 function songLoadedSoFar(soFar) {
@@ -107,7 +110,7 @@ function switchRunMode() {
 
     editorMode = false;
     let now = millis();
-    songEpoch = now + 5000;
+    songEpoch = now + (debugFastRefresh ? 0 : 5000);
     songButton.elt.innerHTML = "stop music";
   }
   else {
