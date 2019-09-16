@@ -46,23 +46,6 @@ function setup() {
   song = loadSound('out0_all.mp3', songLoaded, songLoadedError, songLoadedSoFar);  
   frameRate(60);
 
-  //table to integers
-  let smoothing = window.SMOOTHING !== undefined ? window.SMOOTHING : 0.1
-  const updateFactor = max(0.05, min(1, 1-smoothing))
-  console.log("upd8 factor is " + updateFactor)
-  let smoothedRow = []
-
-  table.rows.forEach((row, rowI) => {
-    row.arr = row.arr.map(elm => Number(elm))
-
-    if(smoothedRow.length === 0)
-      smoothedRow = row.arr
-    else {
-      smoothedRow = smoothedRow.map((smoothed, i) => smoothed + (row.arr[i]-smoothed)*updateFactor)
-      row.arr = smoothedRow
-    }
-  })
-
   // create sliders
   slider1 = createSlider(0, 100, 50);
   slider2 = createSlider(0, 100, 50);
