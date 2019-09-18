@@ -25,6 +25,9 @@ function songLoaded() {
   songButton.elt.disabled = false;
   // let now = millis();
   // songEpoch = now + 5000;
+  if(debugFastRefresh){
+    switchRunMode()
+  }
 }
 
 function songLoadedSoFar(soFar) {
@@ -44,7 +47,9 @@ function setup() {
   main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
   song = loadSound('out0_all.mp3', songLoaded, songLoadedError, songLoadedSoFar);  
+  
   frameRate(60);
+  angleMode(DEGREES);
 
   // create sliders
   slider1 = createSlider(0, 100, 50);
@@ -107,7 +112,7 @@ function switchRunMode() {
 
     editorMode = false;
     let now = millis();
-    songEpoch = now + 5000;
+    songEpoch = now + (debugFastRefresh ? 0 : 5000);
     songButton.elt.innerHTML = "stop music";
   }
   else {
@@ -145,7 +150,6 @@ function draw() {
         if(intSecs > 0) {
           let remainder = secondsRemaining - intSecs;
           let curAngle = map(remainder, 0, 1, 630, 270);
-          angleMode(DEGREES);
           // print(secondsRemaining, intSecs, remainder, curAngle);
           noStroke();
           fill(200);
