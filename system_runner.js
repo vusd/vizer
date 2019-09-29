@@ -25,7 +25,7 @@ function songLoaded() {
   songButton.elt.disabled = false;
   // let now = millis();
   // songEpoch = now + 5000;
-  if(debugFastRefresh){
+  if(debugFastRefresh && getAudioContext().state != "suspended"){
     switchRunMode()
   }
 }
