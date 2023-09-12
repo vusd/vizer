@@ -1,5 +1,5 @@
-const canvasWidth = 1280;
-const canvasHeight = 720;
+const canvasWidth = 540;
+const canvasHeight = 960;
 let mainCanvas;
 
 let slider1, slider2, slider3, slider4;
