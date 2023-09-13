@@ -11,6 +11,7 @@ let song;
 let songIsPlaying = false;
 let songEpoch = 0;              // millis when song starts
 let table;
+let words;
 
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
@@ -38,6 +39,7 @@ function songLoadedSoFar(soFar) {
 
 function preload() {
   table = loadTable('volumes.csv', 'csv');
+  words = loadStrings('words.txt');
 }
 
 let volumes = [];
@@ -46,7 +48,7 @@ let volume_length = 0;
 function setup() {
   main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
-  song = loadSound('out0_all.mp3', songLoaded, songLoadedError, songLoadedSoFar);  
+  song = loadSound('song.mp3', songLoaded, songLoadedError, songLoadedSoFar);  
   
   frameRate(60);
   angleMode(DEGREES);
@@ -137,14 +139,14 @@ function draw() {
     let s3 = slider3.value();
     let s4 = slider4.value();
 
-    draw_one_frame(s1, s2, s3, s4, 0);
+    draw_one_frame("test", s1, s2, s3, s4, 0);
   }
   else {
     if(songEpoch > 0) {
       let now = millis();
       let songOffset = now - songEpoch;
       if(songOffset < 0) {
-        background(30);
+        background(0);
         let secondsRemaining = songOffset / -1000.0;
         let intSecs = int(secondsRemaining);
         if(intSecs > 0) {
@@ -181,11 +183,15 @@ function draw() {
         // draw_one_frame(row);
         // print(row);
         let row = [volumes[0][curSlice], volumes[1][curSlice], volumes[2][curSlice], volumes[3][curSlice]]
+        cur_words = "";
+        if (curSlice < words.length) {
+          cur_words = words[curSlice];
+        }
         slider1.value(row[0]);
         slider2.value(row[1]);
         slider3.value(row[2]);
         slider4.value(row[3]);
-        draw_one_frame(row[0], row[1], row[2], row[3], curSlice);
+        draw_one_frame(cur_words, row[0], row[1], row[2], row[3], curSlice);
       }
     }
   }
