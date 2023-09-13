@@ -2,6 +2,7 @@ const canvasWidth = 540;
 const canvasHeight = 960;
 let mainCanvas;
 
+let textInput;
 let slider1, slider2, slider3, slider4;
 let songButton;
 
@@ -52,6 +53,10 @@ function setup() {
   
   frameRate(60);
   angleMode(DEGREES);
+
+  // create text inputs
+  textInput = createInput('words...');
+  textInput.parent('wordsContainer');
 
   // create sliders
   slider1 = createSlider(0, 100, 50);
@@ -107,6 +112,7 @@ function switchRunMode() {
       alert("Cannot switch mode, there was a problem loading the audio")
       return;
     }
+    textInput.elt.disabled = true;
     slider1.elt.disabled = true;
     slider2.elt.disabled = true;
     slider3.elt.disabled = true;
@@ -122,6 +128,7 @@ function switchRunMode() {
       song.stop();
       songIsPlaying = false;
     }
+    textInput.elt.disabled = false;
     slider1.elt.disabled = false;
     slider2.elt.disabled = false;
     slider3.elt.disabled = false;
@@ -134,12 +141,13 @@ function switchRunMode() {
 
 function draw() {
   if (editorMode) {
+    let w = textInput.value();
     let s1 = slider1.value();
     let s2 = slider2.value();
     let s3 = slider3.value();
     let s4 = slider4.value();
 
-    draw_one_frame("test", s1, s2, s3, s4, 0);
+    draw_one_frame(w, s1, s2, s3, s4, 0);
   }
   else {
     if(songEpoch > 0) {
@@ -187,6 +195,7 @@ function draw() {
         if (curSlice < words.length) {
           cur_words = words[curSlice];
         }
+        textInput.value(cur_words);
         slider1.value(row[0]);
         slider2.value(row[1]);
         slider3.value(row[2]);
