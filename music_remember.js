@@ -1,12 +1,14 @@
 let old_loudest = 0;
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
-function draw_one_frame(vocal, drum, bass, other) {
+function draw_one_frame(words, vocal, drum, bass, other) {
   background(20);
   rectMode(CENTER);
+  textAlign(CENTER);
+  textSize(40);
 
   let bar_spacing = width/5;
-  let bar_pos_y = height/2;
+  let bar_pos_y = 2*height/3;
 
   let loudest = 0; // loudest should be 1, 2, 3, 4 (which of the 4 channels is strongest)
   // 
@@ -60,6 +62,9 @@ function draw_one_frame(vocal, drum, bass, other) {
   else {
     bar_width4 = width/5;
   }
+
+  fill(200, 200, 0);
+  text(words, width/2, height/3);
 
   // vocal bar is red
   fill(200, 0, 0);

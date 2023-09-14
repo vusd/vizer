@@ -1,5 +1,7 @@
+let last_words = "";
+let last_words_opacity = 0;
 
-function draw_one_frame(vocal, drum, bass, other) {
+function draw_one_frame(words, vocal, drum, bass, other) {
   background(100, 200, 100);
   fill(100, 255, 100);
 
@@ -33,4 +35,24 @@ function draw_one_frame(vocal, drum, bass, other) {
   let ovalSize = map(vocal, 20, 100, 60, 150, true);
   fill(200, 150, 150);
   ellipse(width/2, ovalPlace, ovalSize);
+
+  if(words == "") {
+    last_words_opacity = last_words_opacity * 0.95;
+    words = last_words;
+  }
+  else {
+    last_words_opacity = (1 + last_words_opacity) * 1.1;
+    if(last_words_opacity > 255) {
+      last_words_opacity = 255;
+    }
+  }
+  last_words = words;
+
+  textFont('Georgia');
+  textAlign(CENTER);
+  textStyle(BOLD);
+  textSize(80);
+  noStroke();
+  fill(0, 0, 0, int(last_words_opacity));
+  text(words, width/2, height/2);
 }
