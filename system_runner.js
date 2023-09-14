@@ -161,6 +161,7 @@ function draw() {
           let remainder = secondsRemaining - intSecs;
           let curAngle = map(remainder, 0, 1, 630, 270);
           // print(secondsRemaining, intSecs, remainder, curAngle);
+          push()
           noStroke();
           fill(200);
           arc(width/2, height/2, 400, 400, curAngle, curAngle+10);
@@ -169,6 +170,7 @@ function draw() {
           textSize(200);
           textAlign(CENTER, CENTER);
           text(intSecs, width/2, height/2);
+          pop()
         }
         // text("Song starting in: " + secondsRemaining, width/2, height/2)      
       }
